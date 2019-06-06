@@ -3,4 +3,6 @@
 
 #include <iostream>
 
+#include "eOperandType.hpp"
+
 # endif // ABSTRACT_VM_HPP
