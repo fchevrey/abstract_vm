@@ -5,6 +5,6 @@
 
 #include "IOperand.hpp"
 #include "eOperandType.hpp"
-#include "operand.hpp"
+#include "Operand.hpp"
 
 # endif // ABSTRACT_VM_HPP

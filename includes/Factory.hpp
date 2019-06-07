@@ -1,8 +1,11 @@
 #ifndef FACTORY_HPP
 # define FACTORY_HPP
 
-#include "abstract_vm.hpp"
-
+//#include "Operand.hpp"
+#include "IOperand.hpp"
+template< typename T >
+class Operand;
+//class Operand;
 class Factory {
 
 public: 
@@ -12,13 +15,14 @@ public:
     ~Factory(void); 
 
 	Factory &		operator=(Factory const & rhs);
+    static Factory *instance;
     IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 	std::string	const toString() const;
 
 private:
 	typedef	IOperand const * (Factory::*funct)(std::string const &) const;
 
-	funct 		_functArray[eOperandType.SizeMax];
+	funct 		_functArray[eOperandType::SizeMax];
 	// funct 		_functArray[5];
 
 	void	initFunctArray();

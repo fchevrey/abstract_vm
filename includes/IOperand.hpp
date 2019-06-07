@@ -1,4 +1,7 @@
 // #include "abstract_vm.hpp"
+#ifndef IOPERAND_HPP
+# define IOPERAND_HPP
+
 #include <iostream>
 #include "eOperandType.hpp"
 
@@ -18,3 +21,4 @@ public:
 	
 	virtual ~IOperand(void) {}
 };
+#endif

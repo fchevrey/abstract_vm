@@ -1,5 +1,7 @@
 #include "Factory.hpp"
+#include "Operand.hpp"
 
+Factory 		*Factory::instance = nullptr;
 Factory::Factory(void)
 {
 	initFunctArray();
@@ -21,7 +23,7 @@ Factory::~Factory(void)
 Factory &Factory::operator=(Factory const &rhs)
 {
 	//Do whatever needs to be done
-	for (int i = 0; i < static_cast<int>(eOperandType.SizeMax); i++)
+	for (int i = 0; i < eOperandType::SizeMax; i++)
 		_functArray[i] = rhs._functArray[i];
 	return *this;
 }
@@ -29,22 +31,25 @@ Factory &Factory::operator=(Factory const &rhs)
 std::string const Factory::toString(void) const
 {
 	// Return whatever needs to be returned
+	return std::string();
 }
 
 void Factory::initFunctArray()
 {
+	if (Factory::instance == nullptr)
+		Factory::instance = this;
 	int i = 0;
 
-	_functArray[i++] = Factory::createInt8;
-	_functArray[i++] = Factory::createInt16;
-	_functArray[i++] = Factory::createInt32;
-	_functArray[i++] = Factory::createFloat;
-	_functArray[i++] = Factory::createDouble;
+	this->_functArray[i++] = &Factory::createInt8;
+	this->_functArray[i++] = &Factory::createInt16;
+	this->_functArray[i++] = &Factory::createInt32;
+	this->_functArray[i++] = &Factory::createFloat;
+	this->_functArray[i++] = &Factory::createDouble;
 }
 
 IOperand const *Factory::createOperand(eOperandType type, std::string const &value) const
 {
-	(this->*(_functArray[type]))(value);
+	return (this->*(_functArray[type]))(value);
 }
 
 IOperand const *Factory::createInt8(std::string const &value) const
