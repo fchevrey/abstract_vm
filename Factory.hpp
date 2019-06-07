@@ -16,6 +16,13 @@ public:
 	std::string	const toString() const;
 
 private:
+	typedef	IOperand const * (Factory::*funct)(std::string const &) const;
+
+	funct 		_functArray[eOperandType.SizeMax];
+	// funct 		_functArray[5];
+
+	void	initFunctArray();
+
     IOperand const * createInt8( std::string const & value ) const;
     IOperand const * createInt16( std::string const & value ) const;
     IOperand const * createInt32( std::string const & value ) const;

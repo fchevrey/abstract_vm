@@ -2,13 +2,20 @@
 #ifndef OPERAND_HPP
 # define OPERAND_HPP
 
-#include "abstract_vm.hpp"
+// #include "abstract_vm.hpp"
 #include "Factory.hpp"
 
 template< typename T >
 class Operand : public IOperand
 {
 public: 
+
+	Operand<T>(std::string const value)
+	{
+		_type = compareType();
+		_value = value;
+	}
+
 
 	Operand<T>(Operand const & src)
 	{
@@ -43,7 +50,7 @@ public:
 		}
 		else 
 		{
-			computeType = rhs.GetType();
+			computeType = rhs.getType();
 		}
 		if (computeType >= eOperandType.float)
 		{
@@ -129,7 +136,7 @@ public:
 		}
 		return (nullptr);
 	}
-	std::string const	toString(void) const
+	virtual std::string const	&toString(void) const
 	{
 		return _value;
 	}
@@ -148,13 +155,25 @@ private:
 			return b.GetType();
 		}
 	}
+	eOperandType compareType()
+	{
+		if (std::is_same<T, __int8_t>)
+			return eOperandType.Int8;
+		else if (std::is_same<T, __int16_t>)
+			return eOperandType.Int16;
+		else if (std::is_same<T, __int32_t>)
+			return eOperandType.Int32;
+		else if (std::is_same<T, float>)
+			return eOperandType.Float;
+		else if (std::is_same<T, double>)
+			return eOperandType.Double;
+	}
 
 	std::string 	_value;
-	int				_intValue;
-	double			_dbValue;
 	eOperandType 	_type;
 
 };
+
 template< typename T >
 std::ostream &	operator<< (std::ostream & o, Operand<T> const & rhs)
 {

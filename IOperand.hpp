@@ -1,4 +1,6 @@
-#include "abstract_vm.hpp"
+// #include "abstract_vm.hpp"
+#include <iostream>
+#include "eOperandType.hpp"
 
 class IOperand
 {
