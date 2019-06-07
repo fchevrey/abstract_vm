@@ -13,6 +13,7 @@ public:
 
 	Factory &		operator=(Factory const & rhs);
     IOperand const * createOperand( eOperandType type, std::string const & value ) const;
+	std::string	const toString() const;
 
 private:
     IOperand const * createInt8( std::string const & value ) const;
@@ -25,41 +26,3 @@ private:
 std::ostream &	operator<< (std::ostream & o, Factory const & rhs);
 
 #endif
-
-
-#include "Factory.hpp"
-#include <iostream>
-
-Factory::Factory(void)
-{
-    return;
-}
-
-Factory::Factory(Factory const & src) 
-{
-    //Do whatever needs to be done
-    *this = src;
-    return;
-}
-
-Factory::~Factory(void)
-{
-    return;
-}
-
-Factory &	Factory::operator=(Factory const & rhs)
-{
-    //Do whatever needs to be done
-    return *this;
-}
-
-std::string const Factory::toString(void) const
-{
-    // Return whatever needs to be returned
-}
-
-std::ostream &	operator<< (std::ostream & o, Factory const & rhs)
-{
-    o << rhs.toString();
-    return o;
-}

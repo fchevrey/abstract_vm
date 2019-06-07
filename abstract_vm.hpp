@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "IOperand.hpp"
 #include "eOperandType.hpp"
 
 # endif // ABSTRACT_VM_HPP
