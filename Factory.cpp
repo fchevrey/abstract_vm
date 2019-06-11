@@ -10,7 +10,6 @@ Factory::Factory(void)
 
 Factory::Factory(Factory const &src)
 {
-	//Do whatever needs to be done
 	*this = src;
 	return;
 }
@@ -22,7 +21,6 @@ Factory::~Factory(void)
 
 Factory &Factory::operator=(Factory const &rhs)
 {
-	//Do whatever needs to be done
 	for (int i = 0; i < eOperandType::SizeMax; i++)
 		_functArray[i] = rhs._functArray[i];
 	return *this;
