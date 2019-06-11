@@ -23,7 +23,7 @@ public:
 	void    push(eOperandType type, std::string const value);
     void    pop();
     void    dump();
-    void    assert(std::string const v);
+    void    assert(eOperandType type, std::string const value);
     void    add();
     void    sub();
     void    mul();
