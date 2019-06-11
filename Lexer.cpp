@@ -81,7 +81,8 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename)
 		found = buff.find(";");
         if (found != std::string::npos)
             buff = buff.substr(0, found);
-		stack.insert(stack.end(), Lexer::LineToVec(buff));
+		if (!buff.empty())
+			stack.insert(stack.end(), Lexer::LineToVec(buff));
 	}
 	ifs.close();
 	//if (buff.empty())
