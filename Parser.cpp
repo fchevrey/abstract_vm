@@ -8,6 +8,7 @@
 
 Parser::Parser(std::vector<std::vector<std::string>> & input) : _instructs(input)
 {
+	initFunctSimpleArray();
 	return;
 }
 
@@ -159,6 +160,68 @@ void Parser::exit()
 	std::cout << "Bye !" << std::endl;
 	std::exit(EXIT_SUCCESS);
 }
+
+
+void Parser::initFunctSimpleArray()
+{
+	int i = 0;
+
+	this->_functSimpleArray[i++] = &Parser::pop;
+	this->_functSimpleArray[i++] = &Parser::dump;
+	this->_functSimpleArray[i++] = &Parser::add;
+	this->_functSimpleArray[i++] = &Parser::sub;
+	this->_functSimpleArray[i++] = &Parser::mul;
+	this->_functSimpleArray[i++] = &Parser::div;
+	this->_functSimpleArray[i++] = &Parser::mod;
+	this->_functSimpleArray[i++] = &Parser::print;
+	this->_functSimpleArray[i++] = &Parser::exit;
+}
+
+eOperandType Parser::strToType(const std::string str)
+{
+	if (str.compare("int8"))
+		return eOperandType::Int8;
+	else if (str.compare("int16"))
+		return eOperandType::Int16;
+	else if (str.compare("int32"))
+		return eOperandType::Int32;
+	else if (str.compare("float"))
+		return eOperandType::Float;
+	else if (str.compare("double"))
+		return eOperandType::Double;
+	return eOperandType::SizeMax; // Due to lexer, should never be used !!!
+}
+
+void Parser::run()
+{
+	std::string str[] = {"pop", "dump", "add", "sub", "mul", "div", "mod", "print", "exit"};
+	
+	for (size_t i = 0; i < _instructs.size(); i++)
+	{
+		try
+		{
+			if (_instructs[i][0].compare("push") == 0)
+				push(strToType(_instructs[i][1]), _instructs[i][2]);
+			else if (_instructs[i][0].compare("assert") == 0)
+				assert(strToType(_instructs[i][1]), _instructs[i][2]);
+			else
+			{
+				for (int j = 0; j < 9; j++)
+				{
+					if (str[j].compare(_instructs[i][0]) == 0)
+						(this->*(_functSimpleArray[j]))();
+				}
+			}
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		
+	}
+}
+
+
 
 std::ostream &	operator<< (std::ostream & o, Parser const & rhs)
 {
