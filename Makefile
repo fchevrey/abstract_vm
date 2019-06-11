@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: cedric <cedric@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/25 11:28:24 by fchevrey          #+#    #+#              #
-#    Updated: 2019/03/31 20:10:23 by fchevrey         ###   ########.fr        #
+#    Updated: 2019/06/11 12:06:45 by cedric           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_O = $(addprefix $(OBJS_DIR)/, $(OBJS))
 
 CC = clang++
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -std=c++11
 
 INCLUDE = -I includes/
 

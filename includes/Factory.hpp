@@ -36,7 +36,7 @@ public:
     void    exit();
 
 private:
-    std::vector<IOperand> _array;
+    std::vector<const IOperand *> _array;
     
 
 	typedef	IOperand const * (Factory::*funct)(std::string const &) const;
