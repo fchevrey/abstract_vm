@@ -26,12 +26,15 @@ Parser::~Parser(void)
 Parser &	Parser::operator=(Parser const & rhs)
 {
 	//Do whatever needs to be done
+	_instructs = rhs._instructs;
+	_array = rhs._array;
 	return *this;
 }
 
 std::string const Parser::toString(void) const
 {
 	// Return whatever needs to be returned
+	return "";
 }
 
 
