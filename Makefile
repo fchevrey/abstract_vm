@@ -14,9 +14,10 @@ NAME = avm
 
 HEADER_DIR = includes/
 
-SRC_C =  main.cpp Factory.cpp Parser.cpp
+SRC_C =  main.cpp Factory.cpp Parser.cpp Lexer.cpp
 
-HEADER = Factory.hpp abstract_vm.hpp IOperand.hpp eOperandType.hpp Operand.hpp Parser.hpp
+HEADER = Factory.hpp abstract_vm.hpp IOperand.hpp eOperandType.hpp Operand.hpp \
+	Parser.hpp Lexer.hpp
 
 HEADERS = $(addprefix $(HEADER_DIR), $(HEADER))
 
