@@ -45,25 +45,6 @@ void Factory::initFunctArray()
 	this->_functArray[i++] = &Factory::createDouble;
 }
 
-void Factory::push(eOperandType type, std::string const value)
-{
-	_array.push_back(createOperand(type, value));
-}
-
-void Factory::pop()
-{
-	if (_array.size() > 0)
-		_array.pop_back();
-	else
-		throw std::runtime_error("can't pop an empty vector !"); // SHOULD BE CUSTOM EXCEPTION
-}
-
-void Factory::dump()
-{
-	for (std::vector<const IOperand *>::iterator it = _array.begin(); it != _array.end(); it++)
-		std::cout << (*it)->toString() << std::endl;
-}
-
 IOperand const *Factory::createOperand(eOperandType type, std::string const &value) const
 {
 	return (this->*(_functArray[type]))(value);
