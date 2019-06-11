@@ -3,12 +3,16 @@
 
 //#include "Operand.hpp"
 #include "IOperand.hpp"
+#include <vector>
+
 template< typename T >
 class Operand;
-//class Operand;
-class Factory {
 
+class Factory
+{
 public: 
+
+    // Custom exception
 
     Factory(void); 
     Factory(Factory const & src); 
@@ -19,11 +23,25 @@ public:
     IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 	std::string	const toString() const;
 
+    void    push(eOperandType type, std::string const value);
+    void    pop();
+    void    dump();
+    void    assert(std::string const v);
+    void    add();
+    void    sub();
+    void    mul();
+    void    div();
+    void    mod();
+    void    print();
+    void    exit();
+
 private:
+    std::vector<IOperand> _array;
+    
+
 	typedef	IOperand const * (Factory::*funct)(std::string const &) const;
 
 	funct 		_functArray[eOperandType::SizeMax];
-	// funct 		_functArray[5];
 
 	void	initFunctArray();
 
