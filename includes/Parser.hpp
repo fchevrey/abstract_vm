@@ -32,12 +32,19 @@ public:
     void    print();
     void    exit();
 
+	void	run();
 
 private:
 	std::vector<std::vector<std::string>> & _instructs;
     std::vector<const IOperand *> _array;
 
 	Parser(void); 
+
+	typedef	void (Parser::*functSimple)(void);
+	functSimple	_functSimpleArray[9];
+	void initFunctSimpleArray();
+
+	eOperandType strToType(const std::string);
 };
 
 std::ostream &	operator<< (std::ostream & o, Parser const & rhs);
