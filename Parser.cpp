@@ -58,29 +58,107 @@ void Parser::dump()
 		std::cout << (*it)->toString() << std::endl;
 }
 
-void Parser::assert(std::string const v)
+void Parser::assert(eOperandType type, std::string const value)
 {
 	// std::string tmp = (*_array.end())->toString();
 
-	if (((*_array.end())->toString()).compare(v) != 0)
+	if ((*(_array.end() - 1))->getType() != type
+		|| ((*(_array.end() - 1))->toString()).compare(value) != 0)
+	{
 		throw std::runtime_error("not the good value"); // SHOULD BE CUSTOM EXCEPTION
+		exit();
+	}
 }
 
 void Parser::add()
 {
 	if (_array.size() >= 2)
 	{
-		// IOperand *a = new Operand(*_array.end());
-		// pop();
-		// IOperand *b = new Operand(*_array.end());
-		// pop();
-		;
+		IOperand const *a = *(_array.end() - 1);
+		pop();
+		IOperand const *b = *(_array.end() - 1);
+		pop();
+		_array.push_back(*a + *b);
 	}
 	else
 		throw std::runtime_error("not enough elements to perform add()"); // SHOULD BE CUSTOM EXCEPTION
 }
 
+void Parser::sub()
+{
+	if (_array.size() >= 2)
+	{
+		IOperand const *a = *(_array.end() - 1);
+		pop();
+		IOperand const *b = *(_array.end() - 1);
+		pop();
+		_array.push_back(*a - *b);
+	}
+	else
+		throw std::runtime_error("not enough elements to perform sub()"); // SHOULD BE CUSTOM EXCEPTION
+}
 
+void Parser::mul()
+{
+	if (_array.size() >= 2)
+	{
+		IOperand const *a = *(_array.end() - 1);
+		pop();
+		IOperand const *b = *(_array.end() - 1);
+		pop();
+		_array.push_back(*a * *b);
+	}
+	else
+		throw std::runtime_error("not enough elements to perform mul()"); // SHOULD BE CUSTOM EXCEPTION
+}
+
+void Parser::div()
+{
+	if (_array.size() >= 2)
+	{
+		IOperand const *a = *(_array.end() - 1);
+		pop();
+		IOperand const *b = *(_array.end() - 1);
+		pop();
+		_array.push_back(*a / *b);
+	}
+	else
+		throw std::runtime_error("not enough elements to perform div()"); // SHOULD BE CUSTOM EXCEPTION
+}
+
+void Parser::mod()
+{
+	if (_array.size() >= 2)
+	{
+		IOperand const *a = *(_array.end() - 1);
+		pop();
+		IOperand const *b = *(_array.end() - 1);
+		pop();
+		_array.push_back(*a % *b);
+	}
+	else
+		throw std::runtime_error("not enough elements to perform mod()"); // SHOULD BE CUSTOM EXCEPTION
+}
+
+void Parser::print()
+{
+	if ((*(_array.end() - 1))->getType() == eOperandType::Int8)
+	{
+		int tmp = stoi((*(_array.end() - 1))->toString());
+		std::cout << static_cast<char>(tmp);
+	}
+	else
+	{
+		throw std::runtime_error("no int8, no print"); // SHOULD BE CUSTOM EXCEPTION
+		exit();
+	}
+}
+
+void Parser::exit()
+{
+	std::cout << "Bye !" << std::endl;
+	std::exit(EXIT_SUCCESS);
+}
 
 std::ostream &	operator<< (std::ostream & o, Parser const & rhs)
 {
