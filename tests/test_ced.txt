@@ -1,3 +1,4 @@
+push float(0.42)
 push int8(42)
 push int16(12)
 dump
@@ -9,5 +10,10 @@ dump
 ;assert int8(54)
 assert int16(54)
 ;assert int32(54)
-print
+;print
+;push float(2.5)
+push int32(0)
+dump
+;mod
+div
 exit
