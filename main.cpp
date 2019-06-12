@@ -24,7 +24,6 @@ int main(int argc, char const *argv[])
 	std::vector<std::vector<std::string>> stack;
 	std::string		content;
 	std::string		filename;
-	Factory			factory;
 	Parser			*parser;
 
 	if (argc < -1)

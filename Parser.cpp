@@ -1,7 +1,6 @@
 #include "Parser.hpp"
 
-// Parser::Parser(void) : _instructs(new std::vector<std::vector<std::string>>)
-// Parser::Parser(void) : Parser()
+// Parser::Parser(void)
 // {
 // 	return;
 // }
@@ -61,12 +60,10 @@ void Parser::dump()
 
 void Parser::assert(eOperandType type, std::string const value)
 {
-	// std::string tmp = (*_array.end())->toString();
-
 	if ((*(_array.end() - 1))->getType() != type
 		|| ((*(_array.end() - 1))->toString()).compare(value) != 0)
 	{
-		throw std::runtime_error("not the good value"); // SHOULD BE CUSTOM EXCEPTION
+		throw std::runtime_error("not the good type or value"); // SHOULD BE CUSTOM EXCEPTION
 		exit();
 	}
 }
@@ -179,15 +176,15 @@ void Parser::initFunctSimpleArray()
 
 eOperandType Parser::strToType(const std::string str)
 {
-	if (str.compare("int8"))
+	if (str.compare("int8") == 0)
 		return eOperandType::Int8;
-	else if (str.compare("int16"))
+	else if (str.compare("int16") == 0)
 		return eOperandType::Int16;
-	else if (str.compare("int32"))
+	else if (str.compare("int32") == 0)
 		return eOperandType::Int32;
-	else if (str.compare("float"))
+	else if (str.compare("float") == 0)
 		return eOperandType::Float;
-	else if (str.compare("double"))
+	else if (str.compare("double") == 0)
 		return eOperandType::Double;
 	return eOperandType::SizeMax; // Due to lexer, should never be used !!!
 }
