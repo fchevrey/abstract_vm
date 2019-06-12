@@ -10,6 +10,7 @@ class Lexer
 public :
     static std::vector<std::vector<std::string>> 	ReadFile(std::string filename, bool &error);
     static std::vector<std::vector<std::string>>    ReadStdInput(bool &error);
+    static void 		                            PrintStack(std::vector<std::vector<std::string>> stack);
 private :
     Lexer(void);
     Lexer(const Lexer &rhs);
