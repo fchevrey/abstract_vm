@@ -1,5 +1,6 @@
 #include "Factory.hpp"
 #include "Lexer.hpp"
+#include "Parser.hpp"
 
 void PrintStack(std::vector<std::vector<std::string>> stack)
 {
@@ -23,7 +24,8 @@ int main(int argc, char const *argv[])
 	std::vector<std::vector<std::string>> stack;
 	std::string		content;
 	std::string		filename;
-	Factory roger;
+	Factory			factory;
+	Parser			*parser;
 
 	if (argc < -1)
 		argv = nullptr;
@@ -42,6 +44,12 @@ int main(int argc, char const *argv[])
 		return 0;
 	}*/
 	PrintStack(stack);
+
+	std::cout << "\n---PARSER---\n" << std::endl;
+
+	parser = new Parser(stack);
+	parser->run();
+
 //	std::cout << "content =  " << std::endl;
 //	std::cout << content << std::endl;
 	return 0;
