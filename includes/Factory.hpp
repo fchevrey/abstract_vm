@@ -3,6 +3,8 @@
 
 //#include "Operand.hpp"
 #include "IOperand.hpp"
+#include "AvmException.hpp"
+#include <limits>
 #include <vector>
 
 template< typename T >
@@ -29,6 +31,7 @@ private:
 	funct 		_functArray[eOperandType::SizeMax];
 
 	void	initFunctArray();
+	void	flowCompare(std::string const &value, std::string const &ref) const;
 
     IOperand const * createInt8( std::string const & value ) const;
     IOperand const * createInt16( std::string const & value ) const;
