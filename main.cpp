@@ -30,28 +30,18 @@ int main(int argc, char const *argv[])
 	if (argc < -1)
 		argv = nullptr;
 	if (argc == 1)
-	{
 		stack = Lexer::ReadStdInput(error);
-	}
 	else if (argc > 1)
 	{
 		filename = argv[1];
 		stack = Lexer::ReadFile(filename, error);
 	}
-	/*if (content.empty())
-	{
-		std::cout << "Error : empty file or input" << std::endl;
-		return 0;
-	}*/
-	//PrintStack(stack);
+	
 	if (error)
 		return 0;
-	std::cout << "\n---PARSER---\n" << std::endl;
 
 	parser = new Parser(stack);
 	parser->run();
-
-//	std::cout << "content =  " << std::endl;
-//	std::cout << content << std::endl;
+	
 	return 0;
 }
