@@ -3,6 +3,7 @@
 
 #include "IOperand.hpp"
 #include "Factory.hpp"
+#include "AvmException.hpp"
 #include <vector>
 
 template< typename T >
@@ -13,6 +14,7 @@ class Parser {
 public: 
 
 	Parser(std::vector<std::vector<std::string>> & input); 
+	Parser(Parser const & src);
 	~Parser(void); 
 
 	Parser &		operator=(Parser const & rhs);
@@ -26,7 +28,6 @@ private:
     std::vector<const IOperand *> _array;
 
 	Parser(void); 
-	Parser(Parser const & src);
 
 	void    push(eOperandType type, std::string const value);
     void    pop();

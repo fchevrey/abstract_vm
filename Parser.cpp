@@ -1,5 +1,4 @@
 #include "Parser.hpp"
-#include "AvmException.hpp"
 
 // Parser::Parser(void)
 // {
@@ -51,7 +50,7 @@ void Parser::pop()
 	if (_array.size() > 0)
 		_array.pop_back();
 	else
-		throw AvmException::AvmException("can't pop an empty vector !");
+		throw AvmException("can't pop an empty vector !");
 }
 
 void Parser::dump()
@@ -64,7 +63,7 @@ void Parser::assert(eOperandType type, std::string const value)
 {
 	if ((*(_array.end() - 1))->getType() != type
 		|| ((*(_array.end() - 1))->toString()).compare(value) != 0)
-		throw AvmException::AvmException("not the good type or value");
+		throw AvmException("not the good type or value");
 }
 
 void Parser::add()
@@ -75,10 +74,10 @@ void Parser::add()
 		pop();
 		IOperand const *b = *(_array.end() - 1);
 		pop();
-		_array.push_back(*a + *b);
+		_array.push_back(*b + *a);
 	}
 	else
-		throw AvmException::AvmException("not enough elements to perform add()");
+		throw AvmException("not enough elements to perform add()");
 }
 
 void Parser::sub()
@@ -89,10 +88,10 @@ void Parser::sub()
 		pop();
 		IOperand const *b = *(_array.end() - 1);
 		pop();
-		_array.push_back(*a - *b);
+		_array.push_back(*b - *a);
 	}
 	else
-		throw AvmException::AvmException("not enough elements to perform sub()");
+		throw AvmException("not enough elements to perform sub()");
 }
 
 void Parser::mul()
@@ -103,10 +102,10 @@ void Parser::mul()
 		pop();
 		IOperand const *b = *(_array.end() - 1);
 		pop();
-		_array.push_back(*a * *b);
+		_array.push_back(*b * *a);
 	}
 	else
-		throw AvmException::AvmException("not enough elements to perform mul()");
+		throw AvmException("not enough elements to perform mul()");
 }
 
 void Parser::div()
@@ -117,10 +116,10 @@ void Parser::div()
 		pop();
 		IOperand const *b = *(_array.end() - 1);
 		pop();
-		_array.push_back(*a / *b);
+		_array.push_back(*b / *a);
 	}
 	else
-		throw AvmException::AvmException("not enough elements to perform div()");
+		throw AvmException("not enough elements to perform div()");
 }
 
 void Parser::mod()
@@ -131,10 +130,10 @@ void Parser::mod()
 		pop();
 		IOperand const *b = *(_array.end() - 1);
 		pop();
-		_array.push_back(*a % *b);
+		_array.push_back(*b % *a);
 	}
 	else
-		throw AvmException::AvmException("not enough elements to perform mod()");
+		throw AvmException("not enough elements to perform mod()");
 }
 
 void Parser::print()
@@ -145,7 +144,7 @@ void Parser::print()
 		std::cout << static_cast<char>(tmp);
 	}
 	else
-		throw AvmException::AvmException("no int8, no print");
+		throw AvmException("no int8, no print");
 }
 
 void Parser::exit()
@@ -206,7 +205,7 @@ void Parser::run()
 				}
 			}
 		}
-		catch(const AvmException::AvmException& e)
+		catch(const AvmException& e)
 		{
 			std::cerr << e.what() << '\n';
 			exit();
