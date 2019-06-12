@@ -18,10 +18,9 @@ std::vector<std::string>        Lexer::TypeToVec(const std::string &type)
 }
 bool 							Lexer::CheckLine(const std::string &line)
 {
-	const std::regex		instr{"^(pop|print|dump|exit|add|sub|mul|div|mod)"};
-	//std::regex const pattern { R"(\.)" };
-	const std::regex		instr_int("^(push|assert) (int8|int16|int32)\\([0-9]*\\)" );
-	const std::regex		instr_float{"^(push|assert) (float|double)\\([0-9]*\\.{0,1}[0-9]*\\)"};
+	const std::regex		instr("^ *(pop|print|dump|exit|add|sub|mul|div|mod) *");
+	const std::regex		instr_int("^ *(push|assert) *(int8|int16|int32)\\([0-9]*\\) *" );
+	const std::regex		instr_float("^ *(push|assert) *(float|double)\\([0-9]*\\.{0,1}[0-9]*\\) *");
 
 	if (std::regex_match(line, instr))
 		return true;
@@ -31,7 +30,7 @@ bool 							Lexer::CheckLine(const std::string &line)
 		return true;
 	return false;
 }
-std::vector<std::string> 		Lexer::LineToVec(const std::string &line)
+std::vector<std::string> 		Lexer::LineToVec(const std::string &line, int index, bool &error)
 {
     std::stringstream			ss(line);
     std::vector<std::string> 	vec;
@@ -40,14 +39,15 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line)
 
 	if (!Lexer::CheckLine(line))
 	{
-		std::cout << "error(s) in line : " << line << std::endl;
+		std::cout << "error(s) in line " << index << " : " << line << std::endl;
+		error = true;
 	}
 	while (!ss.eof())
 	{
     	ss >> tmp_str;
 		if (tmp_str.find("(") != std::string::npos) //if there is the chaacter '(' in the line
 		{
-			tmp_vec = TypeToVec(tmp_str);
+			tmp_vec = Lexer::TypeToVec(tmp_str);
 			vec.insert(vec.end(), tmp_vec.begin(), tmp_vec.end());
 		}
 		else
@@ -57,13 +57,14 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line)
 	}
 	return vec;
 }
-std::vector<std::vector<std::string>>     Lexer::ReadStdInput(void)
+std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 {
 	std::string    content;
     bool           quit = false;
     std::string    endstr = ";;";
     std::size_t    found;
 	std::vector<std::vector<std::string>> stack;
+	int				lineNb = 1;
 
     while(!quit)
     {
@@ -72,26 +73,28 @@ std::vector<std::vector<std::string>>     Lexer::ReadStdInput(void)
         found = content.find(endstr);
         if (found != std::string::npos)
             quit = true;
-		std::cout << quit << std::endl;
         found = content.find(";");
         if (found != std::string::npos)
             content = content.substr(0, found);
 		if (!content.empty())
-			stack.insert(stack.end(), Lexer::LineToVec(content));
+			stack.insert(stack.end(), Lexer::LineToVec(content, lineNb, error));
+		lineNb++;
     }
 	return stack;
 }
-std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename)
+std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bool &error)
 {
 	std::ifstream	ifs(filename);
 	//std::string		content;
 	std::string		buff;
-	std::size_t			found;
+	std::size_t		found;
 	std::vector<std::vector<std::string>> stack;
+	int 			lineNb = 1;	
 
 	if (!ifs || !ifs.is_open())
 	{
 		std::cout << "open error" << std::endl;
+		error = true;
 		return stack;
 	}
 	while (!ifs.eof())
@@ -101,7 +104,8 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename)
         if (found != std::string::npos)
             buff = buff.substr(0, found);
 		if (!buff.empty())
-			stack.insert(stack.end(), Lexer::LineToVec(buff));
+			stack.insert(stack.end(), Lexer::LineToVec(buff, lineNb, error));
+		lineNb++;
 	}
 	ifs.close();
 	//if (buff.empty())

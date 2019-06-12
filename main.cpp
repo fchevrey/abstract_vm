@@ -25,25 +25,27 @@ int main(int argc, char const *argv[])
 	std::string		content;
 	std::string		filename;
 	Parser			*parser;
+	bool			error = false;
 
 	if (argc < -1)
 		argv = nullptr;
 	if (argc == 1)
 	{
-		stack = Lexer::ReadStdInput();
+		stack = Lexer::ReadStdInput(error);
 	}
 	else if (argc > 1)
 	{
 		filename = argv[1];
-		stack = Lexer::ReadFile(filename);
+		stack = Lexer::ReadFile(filename, error);
 	}
 	/*if (content.empty())
 	{
 		std::cout << "Error : empty file or input" << std::endl;
 		return 0;
 	}*/
-	PrintStack(stack);
-
+	//PrintStack(stack);
+	if (error)
+		return 0;
 	std::cout << "\n---PARSER---\n" << std::endl;
 
 	parser = new Parser(stack);
