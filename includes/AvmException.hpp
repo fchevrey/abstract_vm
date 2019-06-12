@@ -13,6 +13,6 @@ public:
 	AvmException &		operator=(AvmException const & rhs);
 private:
     std::string _msg;
-    AvmException(void); 
+    AvmException(void) throw(); 
 };
 #endif

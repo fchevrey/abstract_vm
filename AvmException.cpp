@@ -13,7 +13,7 @@ const char* AvmException::what() const throw()
     return this->_msg.c_str();
 }
 
-AvmException::AvmException(AvmException const & src) 
+AvmException::AvmException(AvmException const & src) throw()
 {
     *this = src;
     return;

@@ -1,5 +1,6 @@
 #include "Lexer.hpp"
 #include <sstream>
+#include <regex>
 
 std::vector<std::string>        Lexer::TypeToVec(const std::string &type)
 {
@@ -15,6 +16,21 @@ std::vector<std::string>        Lexer::TypeToVec(const std::string &type)
     vec.insert(vec.begin(), type.substr(0, begin));
 	return vec;
 }
+bool 							Lexer::CheckLine(const std::string &line)
+{
+	const std::regex		instr{"^(pop|print|dump|exit|add|sub|mul|div|mod)"};
+	//std::regex const pattern { R"(\.)" };
+	const std::regex		instr_int("^(push|assert) (int8|int16|int32)\\([0-9]*\\)" );
+	const std::regex		instr_float{"^(push|assert) (float|double)\\([0-9]*\\.{0,1}[0-9]*\\)"};
+
+	if (std::regex_match(line, instr))
+		return true;
+	else if (std::regex_match(line, instr_int))
+		return true;
+	else if (std::regex_match(line, instr_float))
+		return true;
+	return false;
+}
 std::vector<std::string> 		Lexer::LineToVec(const std::string &line)
 {
     std::stringstream			ss(line);
@@ -22,7 +38,10 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line)
     std::vector<std::string> 	tmp_vec;
 	std::string 				tmp_str;
 
-
+	if (!Lexer::CheckLine(line))
+	{
+		std::cout << "error(s) in line : " << line << std::endl;
+	}
 	while (!ss.eof())
 	{
     	ss >> tmp_str;
