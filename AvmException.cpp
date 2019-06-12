@@ -2,10 +2,10 @@
 #include "AvmException.hpp"
 #include <iostream>
 
-AvmException::AvmException(std::string const & msg) : _msg(msg)
+AvmException::AvmException(std::string const & msg) throw() : _msg(msg)
 {
-}
-AvmException::AvmException(void)
+} 
+AvmException::AvmException(void) throw()
 {
 }
 const char* AvmException::what() const throw()
@@ -19,7 +19,7 @@ AvmException::AvmException(AvmException const & src)
     return;
 }
 
-AvmException::~AvmException(void)
+AvmException::~AvmException(void) throw()
 {
     return;
 }

@@ -6,16 +6,13 @@
 class AvmException : std::exception
 {
 public: 
-    AvmException(std::string const & msg); 
-    AvmException(AvmException const & src); 
-    virtual ~AvmException(void); 
+    AvmException(std::string const & msg) throw(); 
+    AvmException(AvmException const & src) throw(); 
+    virtual ~AvmException(void) throw(); 
     virtual const char* what() const throw();
 	AvmException &		operator=(AvmException const & rhs);
 private:
     std::string _msg;
     AvmException(void); 
 };
-
-std::ostream &	operator<< (std::ostream & o, AvmException const & rhs);
-
 #endif
