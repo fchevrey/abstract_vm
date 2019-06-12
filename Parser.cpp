@@ -208,11 +208,7 @@ void Parser::run()
 		}
 		catch(const AvmException& e)
 		{
-			std::cerr << e.what() << '\n';
-			exit();
-		}
-		catch(const std::exception& e)
-		{
+			std::cerr << "runtime error on line " << _instructs[i][_instructs[i].size() - 1] << ": ";
 			std::cerr << e.what() << '\n';
 			exit();
 		}
