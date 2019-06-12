@@ -19,6 +19,14 @@ public:
 	Parser &		operator=(Parser const & rhs);
 
 	std::string const	toString(void) const;
+	
+	void	run();
+
+private:
+	std::vector<std::vector<std::string>> & _instructs;
+    std::vector<const IOperand *> _array;
+
+	Parser(void); 
 
 	void    push(eOperandType type, std::string const value);
     void    pop();
@@ -31,14 +39,6 @@ public:
     void    mod();
     void    print();
     void    exit();
-
-	void	run();
-
-private:
-	std::vector<std::vector<std::string>> & _instructs;
-    std::vector<const IOperand *> _array;
-
-	Parser(void); 
 
 	typedef	void (Parser::*functSimple)(void);
 	functSimple	_functSimpleArray[9];

@@ -1,0 +1,12 @@
+push int8(42)
+push int8(12)
+dump
+push int32(25)
+assert int32(25)
+pop
+add
+dump
+assert int8(54)
+assert int32(54)
+print
+exit
