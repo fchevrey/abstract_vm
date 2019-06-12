@@ -150,7 +150,6 @@ void Parser::print()
 
 void Parser::exit()
 {
-	std::cout << std::endl;
 	std::exit(EXIT_SUCCESS);
 }
 
@@ -189,7 +188,7 @@ void Parser::run()
 {
 	std::string str[] = {"pop", "dump", "add", "sub", "mul", "div", "mod", "print", "exit"};
 	
-	for (size_t i = 0; i < _instructs.size(); i++)
+	for (size_t i = 0; i < _instructs.size() ; i++)
 	{
 		try
 		{
