@@ -6,7 +6,7 @@
 #    By: cedric <cedric@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/25 11:28:24 by fchevrey          #+#    #+#              #
-#    Updated: 2019/06/11 15:01:53 by cedric           ###   ########.fr        #
+#    Updated: 2019/06/12 16:08:16 by cedric           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER_DIR = includes/
 
 SRC_C =  main.cpp Factory.cpp Parser.cpp Lexer.cpp AvmException.cpp
 
-HEADER = Factory.hpp abstract_vm.hpp IOperand.hpp eOperandType.hpp Operand.hpp \
+HEADER = Factory.hpp IOperand.hpp eOperandType.hpp Operand.hpp \
 	Parser.hpp Lexer.hpp AvmException.hpp
 
 HEADERS = $(addprefix $(HEADER_DIR), $(HEADER))
