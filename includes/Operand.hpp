@@ -139,8 +139,6 @@ public:
 		if (computeType >= eOperandType::Float)
 		{
 			throw AvmException("Can't perform a modulo with a float/double value");
-			// dbResult = std::stod(_value) % std::stod(rhs.toString());
-			// return (Factory::instance->createOperand(computeType, std::to_string(dbResult)));
 		}
 		else
 		{

@@ -2,6 +2,8 @@
 #include <sstream>
 #include <regex>
 
+bool Lexer::_isExit = false;
+
 std::vector<std::string>        Lexer::TypeToVec(const std::string &type)
 {
 	std::vector<std::string> 	vec;
@@ -41,7 +43,10 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line, int index, 
 	{
 		std::cout << "error(s) in line " << index << " : " << line << std::endl;
 		error = true;
+		return vec;
 	}
+	if (line.find("exit") != std::string::npos)
+		Lexer::_isExit = true;
 	while (!ss.eof())
 	{
     	ss >> tmp_str;
@@ -55,7 +60,12 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line, int index, 
     		vec.insert(vec.end(), tmp_str);
 		}
 	}
+	vec.insert(vec.end(), std::to_string(index));
 	return vec;
+}
+void									Lexer::NoExit()
+{
+	std::cout << "error : there is no exit instruction" << std::endl;
 }
 std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 {
@@ -66,6 +76,7 @@ std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 	std::vector<std::vector<std::string>> stack;
 	int				lineNb = 1;
 
+	Lexer::_isExit = false;
     while(!quit)
     {
 	    quit = !std::getline(std::cin, content);
@@ -80,6 +91,11 @@ std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 			stack.insert(stack.end(), Lexer::LineToVec(content, lineNb, error));
 		lineNb++;
     }
+	if (Lexer::_isExit == false)
+	{
+		error = true;
+		Lexer::NoExit();
+	}
 	return stack;
 }
 std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bool &error)
@@ -91,6 +107,7 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bo
 	std::vector<std::vector<std::string>> stack;
 	int 			lineNb = 1;	
 
+	Lexer::_isExit = false;
 	if (!ifs || !ifs.is_open())
 	{
 		std::cout << "open error" << std::endl;
@@ -107,8 +124,32 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bo
 			stack.insert(stack.end(), Lexer::LineToVec(buff, lineNb, error));
 		lineNb++;
 	}
+	if (Lexer::_isExit == false)
+	{
+		error = true;
+		Lexer::NoExit();
+	}
 	ifs.close();
 	//if (buff.empty())
 	//	std::cout << "empty file" << std::endl;
 	return stack;
+}
+
+Lexer::Lexer(void)
+{
+}
+
+Lexer::Lexer(Lexer const &src)
+{
+	*this = src;
+	return;
+}
+
+Lexer::~Lexer(void)
+{
+}
+
+Lexer &Lexer::operator=(Lexer const &)
+{
+	return *this;
 }

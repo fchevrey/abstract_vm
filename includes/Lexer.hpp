@@ -5,12 +5,20 @@
 # include <vector>
 # include <fstream>
 
-namespace Lexer 
+class Lexer 
 {
-    std::vector<std::vector<std::string>> 	ReadFile(std::string filename, bool &error);
-    std::vector<std::vector<std::string>>   ReadStdInput(bool &error);
-    std::vector<std::string>                LineToVec(const std::string &line, int index, bool &error);
-    std::vector<std::string>                TypeToVec(const std::string &type);
-    bool 							        CheckLine(const std::string &line);
+public :
+    static std::vector<std::vector<std::string>> 	ReadFile(std::string filename, bool &error);
+    static std::vector<std::vector<std::string>>    ReadStdInput(bool &error);
+private :
+    Lexer(void);
+    Lexer(const Lexer &rhs);
+    Lexer &		operator=(Lexer const & rhs);
+    virtual ~Lexer(void);
+    static std::vector<std::string>                 LineToVec(const std::string &line, int index, bool &error);
+    static std::vector<std::string>                 TypeToVec(const std::string &type);
+    static bool 							        CheckLine(const std::string &line);
+    static void                                     NoExit(void);
+    static bool     _isExit;
 };
 #endif
