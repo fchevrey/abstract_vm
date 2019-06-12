@@ -1,7 +1,7 @@
 #include "Factory.hpp"
 #include "Operand.hpp"
 
-Factory 		*Factory::instance = nullptr;
+Factory 		*Factory::instance = new Factory();
 Factory::Factory(void)
 {
 	initFunctArray();
