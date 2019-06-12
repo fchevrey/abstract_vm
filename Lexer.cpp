@@ -101,7 +101,6 @@ std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bool &error)
 {
 	std::ifstream	ifs(filename);
-	//std::string		content;
 	std::string		buff;
 	std::size_t		found;
 	std::vector<std::vector<std::string>> stack;
@@ -130,8 +129,6 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bo
 		Lexer::NoExit();
 	}
 	ifs.close();
-	//if (buff.empty())
-	//	std::cout << "empty file" << std::endl;
 	return stack;
 }
 

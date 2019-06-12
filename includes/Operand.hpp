@@ -32,7 +32,14 @@ public:
 	}
 	virtual int getPrecision(void) const
 	{
-		return 1;// not impletented yet
+		int 			dst = 0;
+		size_t			pos;
+		size_t			len;
+
+		pos = _value.find(".");
+		len = _value.length() - pos;
+		dst = static_cast<int>(len);
+		return dst;
 	}
 
 	virtual eOperandType getType(void) const
