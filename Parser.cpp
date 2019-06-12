@@ -150,7 +150,7 @@ void Parser::print()
 
 void Parser::exit()
 {
-	//std::cout << "Bye !" << std::endl;
+	std::cout << std::endl;
 	std::exit(EXIT_SUCCESS);
 }
 
