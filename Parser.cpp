@@ -50,7 +50,7 @@ void Parser::pop()
 	if (_array.size() > 0)
 		_array.pop_back();
 	else
-		throw AvmException("can't pop an empty vector !");
+		throw AvmException("can't pop an empty stack !");
 }
 
 void Parser::dump()
@@ -61,9 +61,10 @@ void Parser::dump()
 
 void Parser::assert(eOperandType type, std::string const value)
 {
-	if ((*(_array.end() - 1))->getType() != type
-		|| ((*(_array.end() - 1))->toString()).compare(value) != 0)
-		throw AvmException("not the good type or value");
+	if ((*(_array.end() - 1))->getType() != type)
+		throw AvmException("assert error : different types");
+	else if (((*(_array.end() - 1))->toString()).compare(value) != 0)
+		throw AvmException("assert error : different values");
 }
 
 void Parser::add()
@@ -144,12 +145,12 @@ void Parser::print()
 		std::cout << static_cast<char>(tmp);
 	}
 	else
-		throw AvmException("no int8, no print");
+		throw AvmException("only int8 values can be print");
 }
 
 void Parser::exit()
 {
-	std::cout << "Bye !" << std::endl;
+	//std::cout << "Bye !" << std::endl;
 	std::exit(EXIT_SUCCESS);
 }
 
