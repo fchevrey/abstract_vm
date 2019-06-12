@@ -67,6 +67,7 @@ void									Lexer::NoExit()
 {
 	std::cout << "error : there is no exit instruction" << std::endl;
 }
+
 std::vector<std::vector<std::string>>     Lexer::ReadStdInput(bool &error)
 {
 	std::string    content;
@@ -130,6 +131,23 @@ std::vector<std::vector<std::string>> 		Lexer::ReadFile(std::string filename, bo
 	}
 	ifs.close();
 	return stack;
+}
+
+void 		Lexer::PrintStack(std::vector<std::vector<std::string>> stack)
+{
+	std::vector<std::vector<std::string>>::iterator it;
+	std::vector<std::string>::iterator 				it2;
+	int i = 0;
+
+	for (it = stack.begin(); it < stack.end(); it++)
+	{
+    	std::cout << "line : " << i << std::endl;
+		for (it2 = (*it).begin(); it2 < (*it).end(); it2++)
+		{
+    		std::cout << *it2 << std::endl;
+		}
+		i++;
+	}
 }
 
 Lexer::Lexer(void)
