@@ -2,28 +2,27 @@
 #ifndef OPERAND_HPP
 # define OPERAND_HPP
 
-// #include "abstract_vm.hpp"
 #include "IOperand.hpp"
 #include "Factory.hpp"
+#include "AvmException.hpp"
 #include <cstdint>
 
 template< typename T >
 class Operand : public IOperand
 {
 public: 
-
 	Operand<T>(std::string const value)
 	{
 		_type = compareType();
 		_value = value;
 	}
 
-
 	Operand<T>(Operand const & src)
 	{
 		*this = src;
 		return;
 	}
+
 	virtual ~Operand(void) {} 
 
 	Operand &		operator=(Operand const & rhs)
@@ -35,6 +34,7 @@ public:
 	{
 		return 1;// not impletented yet
 	}
+
 	virtual eOperandType getType(void) const
 	{
 		return _type;
@@ -65,7 +65,8 @@ public:
 			return (Factory::instance->createOperand(computeType, std::to_string(intResult)));
 		}
 		return (nullptr);
-	} 
+	}
+
 	virtual IOperand const *operator-(IOperand const &rhs) const 
 	{
 		eOperandType 	computeType = this->GetComputeType(*this, rhs);
@@ -83,7 +84,8 @@ public:
 			return (Factory::instance->createOperand(computeType, std::to_string(intResult)));
 		}
 		return (nullptr);
-	} 
+	}
+
 	virtual IOperand const *operator*(IOperand const &rhs) const
 	{
 		eOperandType 	computeType = this->GetComputeType(*this, rhs);
@@ -102,11 +104,15 @@ public:
 		}
 		return (nullptr);
 	}
+
 	virtual IOperand const *operator/(IOperand const &rhs) const
 	{
 		eOperandType 	computeType = this->GetComputeType(*this, rhs);
 		int 			intResult;
 		double		 	dbResult;
+
+		if (rhs.toString().compare("0") == 0)
+			throw AvmException("Can't perform a division per 0 !");
 
 		if (computeType >= eOperandType::Float)
 		{
@@ -120,17 +126,21 @@ public:
 		}
 		return (nullptr);
 	}
+
 	virtual IOperand const *operator%(IOperand const &rhs) const
 	{
 		eOperandType 	computeType = this->GetComputeType(*this, rhs);
 		int 			intResult;
-	//	double		 	dbResult;
+		// double		 	dbResult;
+
+		if (rhs.toString().compare("0") == 0)
+			throw AvmException("Can't perform a modulo per 0 !");
 
 		if (computeType >= eOperandType::Float)
 		{
-			throw new std::exception();
-			//dbResult = std::stod(_value) % std::stod(rhs.toString());
-			//return (Factory::instance.createOperand(computeType, std::to_string(dbResult)));
+			throw AvmException("Can't perform a modulo with a float/double value");
+			// dbResult = std::stod(_value) % std::stod(rhs.toString());
+			// return (Factory::instance->createOperand(computeType, std::to_string(dbResult)));
 		}
 		else
 		{
@@ -139,14 +149,15 @@ public:
 		}
 		return (nullptr);
 	}
+
 	virtual std::string const	&toString(void) const
 	{
 		return _value;
 	}
 
-
 private:
 	Operand<T>(void) {}
+
 	eOperandType GetComputeType(const IOperand &a, const IOperand &b) const
 	{
 		if (a.getType() > b.getType())
@@ -158,6 +169,7 @@ private:
 			return b.getType();
 		}
 	}
+
 	eOperandType compareType()
 	{
 		if (std::is_same<T, __int8_t>::value )
