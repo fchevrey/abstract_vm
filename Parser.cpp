@@ -1,4 +1,5 @@
 #include "Parser.hpp"
+#include "AvmException.hpp"
 
 // Parser::Parser(void)
 // {
@@ -11,12 +12,13 @@ Parser::Parser(std::vector<std::vector<std::string>> & input) : _instructs(input
 	return;
 }
 
-// Parser::Parser(Parser const & src) 
-// {
-// 	//Do whatever needs to be done
-// 	*this = src;
-// 	return;
-// }
+Parser::Parser(Parser const & src) : _instructs(src._instructs), _array(src._array)
+{
+	*this = src;
+	for (int i = 0; i < 9; i++)
+		_functSimpleArray[i] = src._functSimpleArray[i];
+	return;
+}
 
 Parser::~Parser(void)
 {
@@ -25,16 +27,16 @@ Parser::~Parser(void)
 
 Parser &	Parser::operator=(Parser const & rhs)
 {
-	//Do whatever needs to be done
 	_instructs = rhs._instructs;
 	_array = rhs._array;
+	for (int i = 0; i < 9; i++)
+		_functSimpleArray[i] = rhs._functSimpleArray[i];
 	return *this;
 }
 
 std::string const Parser::toString(void) const
 {
-	// Return whatever needs to be returned
-	return "";
+	return "Parser";
 }
 
 
@@ -49,7 +51,7 @@ void Parser::pop()
 	if (_array.size() > 0)
 		_array.pop_back();
 	else
-		throw std::runtime_error("can't pop an empty vector !"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("can't pop an empty vector !");
 }
 
 void Parser::dump()
@@ -62,10 +64,7 @@ void Parser::assert(eOperandType type, std::string const value)
 {
 	if ((*(_array.end() - 1))->getType() != type
 		|| ((*(_array.end() - 1))->toString()).compare(value) != 0)
-	{
-		throw std::runtime_error("not the good type or value"); // SHOULD BE CUSTOM EXCEPTION
-		exit();
-	}
+		throw AvmException::AvmException("not the good type or value");
 }
 
 void Parser::add()
@@ -79,7 +78,7 @@ void Parser::add()
 		_array.push_back(*a + *b);
 	}
 	else
-		throw std::runtime_error("not enough elements to perform add()"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("not enough elements to perform add()");
 }
 
 void Parser::sub()
@@ -93,7 +92,7 @@ void Parser::sub()
 		_array.push_back(*a - *b);
 	}
 	else
-		throw std::runtime_error("not enough elements to perform sub()"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("not enough elements to perform sub()");
 }
 
 void Parser::mul()
@@ -107,7 +106,7 @@ void Parser::mul()
 		_array.push_back(*a * *b);
 	}
 	else
-		throw std::runtime_error("not enough elements to perform mul()"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("not enough elements to perform mul()");
 }
 
 void Parser::div()
@@ -121,7 +120,7 @@ void Parser::div()
 		_array.push_back(*a / *b);
 	}
 	else
-		throw std::runtime_error("not enough elements to perform div()"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("not enough elements to perform div()");
 }
 
 void Parser::mod()
@@ -135,7 +134,7 @@ void Parser::mod()
 		_array.push_back(*a % *b);
 	}
 	else
-		throw std::runtime_error("not enough elements to perform mod()"); // SHOULD BE CUSTOM EXCEPTION
+		throw AvmException::AvmException("not enough elements to perform mod()");
 }
 
 void Parser::print()
@@ -146,10 +145,7 @@ void Parser::print()
 		std::cout << static_cast<char>(tmp);
 	}
 	else
-	{
-		throw std::runtime_error("no int8, no print"); // SHOULD BE CUSTOM EXCEPTION
-		exit();
-	}
+		throw AvmException::AvmException("no int8, no print");
 }
 
 void Parser::exit()
@@ -210,15 +206,18 @@ void Parser::run()
 				}
 			}
 		}
+		catch(const AvmException::AvmException& e)
+		{
+			std::cerr << e.what() << '\n';
+			exit();
+		}
 		catch(const std::exception& e)
 		{
 			std::cerr << e.what() << '\n';
+			exit();
 		}
-		
 	}
 }
-
-
 
 std::ostream &	operator<< (std::ostream & o, Parser const & rhs)
 {

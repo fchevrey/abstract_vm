@@ -13,13 +13,12 @@ class Parser {
 public: 
 
 	Parser(std::vector<std::vector<std::string>> & input); 
-	Parser(Parser const & src); 
 	~Parser(void); 
 
 	Parser &		operator=(Parser const & rhs);
 
 	std::string const	toString(void) const;
-	
+
 	void	run();
 
 private:
@@ -27,6 +26,7 @@ private:
     std::vector<const IOperand *> _array;
 
 	Parser(void); 
+	Parser(Parser const & src);
 
 	void    push(eOperandType type, std::string const value);
     void    pop();
