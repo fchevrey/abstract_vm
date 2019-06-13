@@ -1,0 +1,6 @@
+push double(-.5)
+push double(-2)
+dump
+add
+dump
+exit

@@ -1,4 +1,4 @@
 push int8(120)
-push int8(-500)
+push int8(-50)
 mul ;will overflow due to int8 storage
 exit

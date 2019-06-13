@@ -50,14 +50,14 @@ void Factory::flowCompare(std::string const &value, std::string const &ref) cons
 	if (value.length() > ref.length())
 	{
 		if (ref[0] == '-')
-			throw AvmException("underflow!");
-		throw AvmException("overflow!");
+			throw AvmException("underflow A!");
+		throw AvmException("overflow A!");
 	}
 	if (value.length() == ref.length() && value.compare(ref) > 0)
 	{
 		if (ref[0] == '-')
-			throw AvmException("underflow!");
-		throw AvmException("overflow!");
+			throw AvmException("underflow B!");
+		throw AvmException("overflow B!");
 	}
 }
 
@@ -68,7 +68,6 @@ IOperand const *Factory::createOperand(eOperandType type, std::string const &val
 
 IOperand const *Factory::createInt8(std::string const &value) const
 {
-	// std::cout << "max int8: " << INT8_MAX << std::endl;
 	if (value[0] == '-')
 		flowCompare(value, std::to_string(INT8_MIN));
 	else
@@ -97,7 +96,7 @@ IOperand const *Factory::createInt32(std::string const &value) const
 IOperand const *Factory::createFloat(std::string const &value) const
 {	
 	if (value[0] == '-')
-		flowCompare(value, std::to_string(1.175494351e-38F));
+		flowCompare(value, std::to_string(-3.402823466e+38F));
 	else
 		flowCompare(value, std::to_string(3.402823466e+38F));
 	return new Operand<float>(value);
@@ -106,7 +105,7 @@ IOperand const *Factory::createFloat(std::string const &value) const
 IOperand const *Factory::createDouble(std::string const &value) const
 {
 	if (value[0] == '-')
-		flowCompare(value, std::to_string(2.2250738585072014e-308));
+		flowCompare(value, std::to_string(-1.7976931348623158e+308));
 	else
 		flowCompare(value, std::to_string(1.7976931348623158e+308));
 	return new Operand<double>(value);
