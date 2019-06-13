@@ -21,8 +21,8 @@ std::vector<std::string>        Lexer::TypeToVec(const std::string &type)
 bool 							Lexer::CheckLine(const std::string &line)
 {
 	const std::regex		instr("^ *(pop|print|dump|exit|add|sub|mul|div|mod) *");
-	const std::regex		instr_int("^ *(push|assert) *(int8|int16|int32)\\([0-9]*\\) *" );
-	const std::regex		instr_float("^ *(push|assert) *(float|double)\\([0-9]*\\.{0,1}[0-9]*\\) *");
+	const std::regex		instr_int("^ *(push|assert) *(int8|int16|int32)\\(-?[0-9]*\\) *" );
+	const std::regex		instr_float("^ *(push|assert) *(float|double)\\(-?[0-9]*\\.?[0-9]*\\) *");
 
 	if (std::regex_match(line, instr))
 		return true;
