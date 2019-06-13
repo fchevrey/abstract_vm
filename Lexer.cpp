@@ -50,7 +50,7 @@ std::vector<std::string> 		Lexer::LineToVec(const std::string &line, int index, 
 	while (!ss.eof())
 	{
     	ss >> tmp_str;
-		if (tmp_str.find("(") != std::string::npos) //if there is the chaacter '(' in the line
+		if (tmp_str.find("(") != std::string::npos) //if there is the character '(' in the line
 		{
 			tmp_vec = Lexer::TypeToVec(tmp_str);
 			vec.insert(vec.end(), tmp_vec.begin(), tmp_vec.end());
@@ -154,7 +154,7 @@ Lexer::Lexer(void)
 {
 }
 
-Lexer::Lexer(Lexer const &src)
+Lexer::Lexer(const Lexer &src)
 {
 	*this = src;
 	return;
