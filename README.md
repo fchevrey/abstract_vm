@@ -14,4 +14,4 @@ To made this projetc I use :
 - all the Lexer function and variables are statics
 - a factory class
 - a singleton patterne to use the Facoty class method without instanciation (the prototypes of the function where givent in the subjects and are not static)
-- a Tempalte class that inherit from IOperand
+- a Template class that inherit from IOperand
